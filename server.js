@@ -21,6 +21,7 @@ const server = http.createServer((req, res)=>{
     // res.end();
 
     //Basic routing...to see diff html pages
+    //status codes added to show the type of response sent
     let path = './views/';
 
     switch(req.url) {
@@ -32,6 +33,14 @@ const server = http.createServer((req, res)=>{
             path += 'about.html'
             res.statusCode = 200;
             break;
+        //redirect
+        case '/about-me':
+            //301 for resource moved
+            res.statusCode = 301;
+            res.setHeader('Location', '/about');
+            res.end()
+            break;
+
         default:
             path += '404.html'
             res.statusCode = 404;
