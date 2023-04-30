@@ -20,8 +20,24 @@ const server = http.createServer((req, res)=>{
     // res.write(`<p>and you'll sink deep into the rabbit hole...</p>`);
     // res.end();
 
+    //Basic routing
+    let path = './views/';
+
+    switch(req.url) {
+        case '/':
+            path += 'index.html'
+            break;
+        case '/about':
+            path += 'about.html'
+            break;
+        default:
+            path += '404.html'
+            break;
+    }
+
     //reading outside html file from dir
-    fs.readFile('./views/index.html', (err, data) => {
+    // fs.readFile('./views/index.html', (err, data) => {
+    fs.readFile(path, (err, data) => {
         if(err){
             console.log(err);
             res.end();
