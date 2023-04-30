@@ -20,18 +20,21 @@ const server = http.createServer((req, res)=>{
     // res.write(`<p>and you'll sink deep into the rabbit hole...</p>`);
     // res.end();
 
-    //Basic routing
+    //Basic routing...to see diff html pages
     let path = './views/';
 
     switch(req.url) {
         case '/':
             path += 'index.html'
+            res.statusCode = 200;
             break;
         case '/about':
             path += 'about.html'
+            res.statusCode = 200;
             break;
         default:
             path += '404.html'
+            res.statusCode = 404;
             break;
     }
 
