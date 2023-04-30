@@ -1,4 +1,5 @@
 const http = require('http');
+const fs = require('fs');
 
 //create server takes a callback func which takes 2 args request obj and response Obj
 const server = http.createServer((req, res)=>{
@@ -14,10 +15,22 @@ const server = http.createServer((req, res)=>{
     // content-Type html
     res.setHeader('Content-type', 'text/html');
     //replacing default head in browser...just an example 
-    res.write('<head><link rel="stylesheet" href="#"></head>');
-    res.write('<p>find the white rabbit...</p>');
-    res.write(`<p>and you'll sink deep into the rabbit hole...</p>`);
-    res.end();
+    // res.write('<head><link rel="stylesheet" href="#"></head>');
+    // res.write('<p>find the white rabbit...</p>');
+    // res.write(`<p>and you'll sink deep into the rabbit hole...</p>`);
+    // res.end();
+
+    //reading outside html file from dir
+    fs.readFile('./views/index.html', (err, data) => {
+        if(err){
+            console.log(err);
+            res.end();
+        }else{
+            // res.write(data);
+            //can pass data as arg in end()..if write() is used only once
+            res.end(data);
+        }
+    })
 });
 
 //to listen for requests
