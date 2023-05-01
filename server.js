@@ -1,5 +1,7 @@
 const http = require('http');
 const fs = require('fs');
+//_commonly used in lodash(not necessary)
+const _ = require('lodash');
 
 //create server takes a callback func which takes 2 args request obj and response Obj
 const server = http.createServer((req, res)=>{
@@ -7,6 +9,13 @@ const server = http.createServer((req, res)=>{
     // console.log(req) //...a big Request obj
     console.log(req.url, req.method)
 
+    //lodash usage
+    //a utility pkg with diff methods eg random no's b2n 0 & 20
+    const num = _.random(0,20);
+    //running a func once
+    const greet = _.once(()=> console.log('hello'));
+    greet();
+    greet();
     // set Header content-type
     // res.setHeader('Content-type', 'text/plain');
     // res.write('find the white rabbit...');
