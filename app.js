@@ -28,7 +28,15 @@ app.get('/',(req,res)=>{
     //rendering ejs templates
     //no need for .ejs ext,it looks in views folder and finds index.ejs 
     //2nd arg is data passed from app.js to ejs templates...check <title>
-    res.render('index',{ title: 'home'})
+    // res.render('index',{ title: 'home'})
+
+    //can also pass more complex data
+    const blogs = [{ title: 'Mario rides', snippet: ' Lorem ipsum dolor sit amet consectetur.'},
+                    { title: 'Luigi follows', snippet: ' Lorem ipsum dolor sit amet consectetur.'},
+                    { title: 'Bowser attacks', snippet: ' Lorem ipsum dolor sit amet consectetur.'}
+                    ]
+    //blogs destructuring
+    res.render('index',{ title: 'home', blogs})
 })
 
 //about page

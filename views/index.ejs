@@ -24,6 +24,14 @@
 
     <div class="blogs content">
         <h2>All Blogs</h2>
+        <% if(blogs.length >0) { %>
+            <% blogs.forEach(blog => { %>
+                <h3><%= blog.title%></h3>
+                <p><%= blog.snippet%></p>
+            <% }) %>
+        <% } else {%>
+            <p>No blogs to display....</p>
+        <% } %>
     </div>
 </body>
 </html>
