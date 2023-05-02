@@ -12,6 +12,7 @@ const server = http.createServer((req, res)=>{
     //lodash usage
     //a utility pkg with diff methods eg random no's b2n 0 & 20
     const num = _.random(0,20);
+    console.log(num);
     //running a func once
     const greet = _.once(()=> console.log('hello'));
     greet();
