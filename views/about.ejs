@@ -1,22 +1,9 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ejs Rendered | <%= title %></title>
-</head>
+<!-- partials included -->
+<%- include('./partials/head.ejs') %>
 <body>
-    <nav>
-        <div class="site-title">
-            <a href="/"><h1>Blog Ninja</h1></a>
-            <p>A net ninja rendered...</p>
-        </div>
-        <ul>
-            <li><a href="/">Blogs</a></li>
-            <li><a href="/about">About</a></li>
-            <li><a href="/blogs/create">New Blogs</a></li>
-        </ul>
-    </nav>
+    <!-- partials included -->
+    <%- include('./partials/nav.ejs') %>
 
     <div class="about content">
         <h2>About us</h2>
@@ -24,5 +11,8 @@
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat officia libero harum esse eius dolorum fugit deleniti rem. Commodi, delectus ipsum! Totam provident quia id optio natus veniam, impedit accusamus facilis exercitationem recusandae saepe, ipsa amet maxime expedita ullam vero maiores, animi libero perferendis aperiam. Atque tempora neque odit ipsam.</p>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellat officia libero harum esse eius dolorum fugit deleniti rem. Commodi, delectus ipsum! Totam provident quia id optio natus veniam, impedit accusamus facilis exercitationem recusandae saepe, ipsa amet maxime expedita ullam vero maiores, animi libero perferendis aperiam. Atque tempora neque odit ipsam.</p>
     </div>
+
+    <!-- partials included -->
+    <%- include('./partials/footer.ejs') %>
 </body>
 </html>
