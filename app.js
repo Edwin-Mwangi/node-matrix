@@ -1,31 +1,69 @@
 //using express
 const express = require('express');
 const app = express();
+const mongoose = require('mongoose');
 const morgan = require('morgan'); 
+const Blog = require('./models/blog');
 
-//set ejs view engine
+//connectionString from mongo Atlas
+const dbURI = 'mongodb+srv://edwin:test123@node101.ejfrel0.mongodb.net/node101';
+
+//use mongoose to connect to mongo db..takes time so async
+mongoose.connect(dbURI)
+
+//to remove deprecated error, add 2nd arg
+// mongoose.connect(dbURI, { useNewURIParser: true, useUnifiedTopology: true})
+    //listen to port after db connection
+    .then(result => app.listen('3000'))
+    .catch(err => console.log(err))
+
+
 app.set('view engine', 'ejs');
-
-//listen for requests
-app.listen('3000')
-
-//middleware to specify static files
 app.use(express.static('public'))
-
-//running morgan
 app.use(morgan('dev'))
 
-//listen for get requests
-app.get('/',(req,res)=>{
-    //can also pass more complex data
-    const blogs = [{ title: 'Mario rides', snippet: ' Lorem ipsum dolor sit amet consectetur.'},
-                    { title: 'Luigi follows', snippet: ' Lorem ipsum dolor sit amet consectetur.'},
-                    { title: 'Bowser attacks', snippet: ' Lorem ipsum dolor sit amet consectetur.'}
-                    ]
-    //blogs destructuring
-    res.render('index',{ title: 'home', blogs})
+//mongoose and mongo sandbox routes..just test examples
+//adding doc to db collection
+// app.get('/add-blog',(req,res)=>{
+//     //instantiate the model
+//     const blog = new Blog({
+//         title: 'blog 2',
+//         snippet: 'about my other blog',
+//         body: 'the white rabbit is elusive'
+//         //timestamp included automatically
+//     });
+//     //async
+//     blog.save()
+//         .then(result => res.send(result))
+//         .catch(err => console.log(err))
+// })
+
+//retrieving doc
+app.get('/all-blogs',(req,res)=>{
+    //no instantiation method used automatically
+    Blog.find()
+        .then(result => res.send(result))
+        .catch(err => console.log(err))
 })
 
+//single doc
+app.get('/single-blog',(req,res)=>{
+    //no instantiation method used automatically
+    Blog.findById('6452cc304e6fe4c7f2034218')//include id from db
+        .then(result => res.send(result))
+        .catch(err => console.log(err))
+})
+
+//outputting data to views
+app.get('/',(req,res)=>{
+    res.redirect('/blogs')
+})
+
+app.get('/blogs',(req,res)=>{
+    Blog.find()
+        .then(result => res.render('index',{ title: 'All blogs', blogs: result}))
+        .catch(err => console.log(err))    
+})
 
 //about page
 app.get('/about',(req,res)=>{
