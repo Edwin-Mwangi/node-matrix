@@ -12,6 +12,16 @@ app.set('view engine', 'ejs');
 //no need for localhost to be defined
 app.listen('3000')
 
+//middleware (works top to btm)
+//add arg next() for the code to continue
+app.use((req, res, next) => {
+    console.log('new request made');
+    console.log('hostname: ', req.hostname);
+    console.log('path: ',req.path);
+    console.log('method',req.method);
+    next(); //allows code to continue,get URL and fire correct handler
+})
+
 //listen for get requests
 app.get('/',(req,res)=>{
     // res.write()
@@ -37,6 +47,13 @@ app.get('/',(req,res)=>{
                     ]
     //blogs destructuring
     res.render('index',{ title: 'home', blogs})
+})
+
+//another middleware testing topdown approach
+// req, res, included otherwise next not working
+app.use((req, res,next) => {
+    console.log('2nd middleware not fired when we goto "/"');
+    next();
 })
 
 //about page
