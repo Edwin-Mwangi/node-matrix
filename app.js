@@ -60,7 +60,7 @@ app.get('/',(req,res)=>{
 })
 
 app.get('/blogs',(req,res)=>{
-    Blog.find()
+    Blog.find().sort({createdAt: -1})//sort in desc order
         .then(result => res.render('index',{ title: 'All blogs', blogs: result}))
         .catch(err => console.log(err))    
 })
