@@ -31,5 +31,10 @@ router.get('/about-us',(req,res)=>{
     res.redirect('/about')
 });
 
+//404
+router.use((req,res)=>{
+    res.status(404).render('404',{ title: '404'})
+})
+
 //blog routes
 app.use('/blogs', blogRoutes);
