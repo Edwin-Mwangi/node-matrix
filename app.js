@@ -18,23 +18,25 @@ app.use(morgan('dev'))
 app.use(express.urlencoded({extended:true}))//to view form input data
 
 //OG routes
-router.get('/',(req,res)=>{
+app.get('/',(req,res)=>{
     res.redirect('/blogs')
 })
 
-router.get('/about',(req,res)=>{
+app.get('/about',(req,res)=>{
     res.render('about',{ title: 'about'})
 })
 
 //redirects
-router.get('/about-us',(req,res)=>{
+app.get('/about-us',(req,res)=>{
     res.redirect('/about')
 });
 
+//blog routes
+app.use('/blogs', blogRoutes);
+
+
 //404
-router.use((req,res)=>{
+app.use((req,res)=>{
     res.status(404).render('404',{ title: '404'})
 })
 
-//blog routes
-app.use('/blogs', blogRoutes);

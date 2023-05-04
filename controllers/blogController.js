@@ -1,5 +1,5 @@
 //inbetweener of Model and view
-const blog = require('../models/blog');
+const Blog = require('../models/blog');
 
 const blog_index = (req, res) => {
     Blog.find().sort({createdAt: -1})
@@ -8,7 +8,7 @@ const blog_index = (req, res) => {
 }
 
 const blog_details = (req, res) => {
-    const id = route.params.id;
+    const id = req.params.id;
     Blog.findById(id)
         .then(result => {
             res.render('details', {
@@ -29,7 +29,7 @@ const blog_create_get = (req, res) => {
 const blog_create_post = (req, res) => {
     const blog = new Blog(req.body);
     blog.save()
-        .then(result => res.redirect('/blogs'))
+        .then(result => res.redirect('/'))
         .catch(err => console.log(err)) 
 }
 
@@ -37,7 +37,7 @@ const blog_delete = (req, res) => {
     const id = route.params.id;
     Blog.findByIdAndDelete(id)
         .then(result => {
-            res.json({redirect: '/blogs'})
+            res.json({redirect: '/'})
         })
         .catch(err => console.log(err))
 }
