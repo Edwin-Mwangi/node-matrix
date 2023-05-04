@@ -82,13 +82,33 @@ app.get('/all-blogs',(req,res)=>{
         .catch(err => console.log(err))
 })
 
-//single doc
-app.get('/single-blog',(req,res)=>{
-    //no instantiation method used automatically
-    Blog.findById('6452cc304e6fe4c7f2034218')//include id from db
-        .then(result => res.send(result))
+//route param using variable id
+app.get('/blogs/:id',(req,res)=>{
+    const id = route.params.id;
+    Blog.findById(id)
+        .then(result => {
+            //we'll define details page in views
+            res.render('details', {
+                blog: result,
+                title: 'Blog Details'
+            })
+        })
         .catch(err => console.log(err))
 })
+
+//deleting a blog(request from fetch in frontend)
+//ajax requests do not allow redirects(res.redirect('/blogs'))
+//so we'll pass data with redirect obj
+app.delete('/blogs/:id',(req,res)=>{
+    const id = route.params.id;
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            //return json obj to view for redirect
+            res.json({redirect: '/blogs'})
+        })
+        .catch(err => console.log(err))
+})
+
 
 //404
 app.use((req,res)=>{

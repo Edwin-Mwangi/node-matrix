@@ -13,8 +13,11 @@
         <h2>All Blogs</h2>
         <% if(blogs.length >0) { %>
             <% blogs.forEach(blog => { %>
-                <h3><%= blog.title%></h3>
-                <p><%= blog.snippet%></p>
+                <!-- id accessed from mongo db -->
+                <a href="/blogs/<%= blog._id%>" class="single" >
+                    <h3><%= blog.title%></h3>
+                    <p><%= blog.snippet%></p>
+                </a>
             <% }) %>
         <% } else {%>
             <p>No blogs to display....</p>
