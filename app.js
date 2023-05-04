@@ -17,10 +17,11 @@ mongoose.connect(dbURI)
     .then(result => app.listen('3000'))
     .catch(err => console.log(err))
 
-
+//middleware
 app.set('view engine', 'ejs');
 app.use(express.static('public'))
 app.use(morgan('dev'))
+app.use(express.urlencoded({extended:true}))//to view form input data
 
 //mongoose and mongo sandbox routes..just test examples
 //adding doc to db collection
@@ -38,6 +39,41 @@ app.use(morgan('dev'))
 //         .catch(err => console.log(err))
 // })
 
+//outputting data to views
+app.get('/',(req,res)=>{
+    res.redirect('/blogs')
+})
+
+//about page
+app.get('/about',(req,res)=>{
+    res.render('about',{ title: 'about'})
+})
+
+//redirects
+app.get('/about-us',(req,res)=>{
+    res.redirect('/about')
+});
+
+//blogs
+app.get('/blogs',(req,res)=>{
+    Blog.find().sort({createdAt: -1})//sort in desc order
+        .then(result => res.render('index',{ title: 'All blogs', blogs: result}))
+        .catch(err => console.log(err))    
+})
+
+app.post('/blogs',(req, res) =>{
+    // console.log(req.body); //undefined if urlencoded middleware not defined
+    const blog = new Blog(req.body);
+    blog.save()
+        .then(result => res.redirect('/blogs'))
+        .catch(err => console.log(err))  
+})
+
+//create handler
+app.get('/blogs/create',(req,res)=>{
+    res.render('create' ,{ title: 'create'})
+});
+
 //retrieving doc
 app.get('/all-blogs',(req,res)=>{
     //no instantiation method used automatically
@@ -53,32 +89,6 @@ app.get('/single-blog',(req,res)=>{
         .then(result => res.send(result))
         .catch(err => console.log(err))
 })
-
-//outputting data to views
-app.get('/',(req,res)=>{
-    res.redirect('/blogs')
-})
-
-app.get('/blogs',(req,res)=>{
-    Blog.find().sort({createdAt: -1})//sort in desc order
-        .then(result => res.render('index',{ title: 'All blogs', blogs: result}))
-        .catch(err => console.log(err))    
-})
-
-//about page
-app.get('/about',(req,res)=>{
-    res.render('about',{ title: 'about'})
-})
-
-//redirects
-app.get('/about-us',(req,res)=>{
-    res.redirect('/about')
-});
-
-//blogs/create handler
-app.get('/blogs/create',(req,res)=>{
-    res.render('create' ,{ title: 'create'})
-});
 
 //404
 app.use((req,res)=>{
