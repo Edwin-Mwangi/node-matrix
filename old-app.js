@@ -1,3 +1,4 @@
+//using express
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
@@ -22,40 +23,7 @@ app.use(express.static('public'))
 app.use(morgan('dev'))
 app.use(express.urlencoded({extended:true}))//to view form input data
 
-//mongoose and mongo sandbox routes..just test examples
-//adding doc to db collection
-// app.get('/add-blog',(req,res)=>{
-//     //instantiate the model
-//     const blog = new Blog({
-//         title: 'blog 2',
-//         snippet: 'about my other blog',
-//         body: 'the white rabbit is elusive'
-//         //timestamp included automatically
-//     });
-//     //async
-//     blog.save()
-//         .then(result => res.send(result))
-//         .catch(err => console.log(err))
-// })
-
-//retrieving doc
-// app.get('/all-blogs',(req,res)=>{
-//     //no instantiation method used automatically
-//     Blog.find()
-//         .then(result => res.send(result))
-//         .catch(err => console.log(err))
-// })
-
-//single doc
-// app.get('/single-blog',(req,res)=>{
-//     //no instantiation method used automatically
-//     Blog.findById('6452cc304e6fe4c7f2034218')//include id from db
-//         .then(result => res.send(result))
-//         .catch(err => console.log(err))
-// })
-
-//normal routes
-//outputting data to views
+//OG routes
 app.get('/',(req,res)=>{
     res.redirect('/blogs')
 })
@@ -70,14 +38,14 @@ app.get('/about-us',(req,res)=>{
     res.redirect('/about')
 });
 
-//blogs
+//blog routes
 app.get('/blogs',(req,res)=>{
     Blog.find().sort({createdAt: -1})//sort in desc order
         .then(result => res.render('index',{ title: 'All blogs', blogs: result}))
         .catch(err => console.log(err))    
 })
 
-//posting a new blog from form
+//posting a new blog
 app.post('/blogs',(req, res) =>{
     // console.log(req.body); //undefined if urlencoded middleware not defined
     const blog = new Blog(req.body);
@@ -90,6 +58,33 @@ app.post('/blogs',(req, res) =>{
 app.get('/blogs/create',(req,res)=>{
     res.render('create' ,{ title: 'create'})
 });
+
+//route param using variable id
+app.get('/blogs/:id',(req,res)=>{
+    const id = route.params.id;
+    Blog.findById(id)
+        .then(result => {
+            //we'll define details page in views
+            res.render('details', {
+                blog: result,
+                title: 'Blog Details'
+            })
+        })
+        .catch(err => console.log(err))
+})
+
+//deleting a blog(request from fetch in frontend)
+//ajax requests do not allow redirects(res.redirect('/blogs'))
+//so we'll pass data with redirect obj
+app.delete('/blogs/:id',(req,res)=>{
+    const id = route.params.id;
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            //return json obj to view for redirect
+            res.json({redirect: '/blogs'})
+        })
+        .catch(err => console.log(err))
+})
 
 
 //404
