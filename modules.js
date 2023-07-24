@@ -5,7 +5,7 @@
 // console.log(xyz.name, xyz.ages)
 
 //destructuring toget what we need
-const {names , ages} = require('./test')//names logged out as test.ja is ran automatically
+const {names , ages} = require('./test')//names logged out as test.js is ran automatically
 
 console.log(ages)
 

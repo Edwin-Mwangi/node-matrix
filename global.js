@@ -15,5 +15,5 @@ const int = setInterval(()=>{
     console.log('loopty loops')
 }, 1000)
 
-console.log(__dirname);
-console.log(__filename);
+console.log(__dirname);//without file
+console.log(__filename);//with filename in path

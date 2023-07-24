@@ -23,7 +23,7 @@ fs.writeFile('./docs/blogsTwo.txt','the microwave of evil',()=>{
 //         console.log(err);
 //     }console.log('folder was created');
 // })
-//if folder exists returns error so
+//if folder exists returns error so(synchronous code to block & check 1st)
 if(!fs.existsSync('./assets')){  
     //existsSync() returns boolean...! negate
     fs.mkdir('./assets', (err, data)=>{

@@ -16,8 +16,9 @@
         const trashcan = document.querySelector('a.delete');
 
         trashcan.addEventListener('click', e => {
-            const endpoint = `/blogs/${trashcan.datasest.doc}`
-            //use fetch API to send del request to server
+            const endpoint = `/blogs/${trashcan.dataset.doc}`
+            //use fetch API to send del request to "/blogs/:id" endpoint
+            //the server then defines how to handle del req in that endpoint
             fetch(endpoint, {
                 method: 'DELETE'
             })

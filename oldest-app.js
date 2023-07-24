@@ -3,17 +3,18 @@ const express = require('express');//returns a func
 const app = express();//instance of that func given varname app
 const morgan = require('morgan'); //3rd party middleware morgan
 
-//set ejs view engine
+//set ejs view engine...
+//view engines used to set dynamic data,prev html files were static
 app.set('view engine', 'ejs');
 
 //by default assumes views are in views folder..to set another folder
 // app.set('views','newviews');
 
 //listen for requests
-//no need for localhost to be defined
+//no need for 'localhost' to be defined
 app.listen('3000')
 
-//middleware to specify static files
+//middleware to specify static files(viewable)
 app.use(express.static('public'))
 
 //running morgan (its a logger middleware)
@@ -40,7 +41,7 @@ app.get('/',(req,res)=>{
     // res.send('<p>Express routes to Zion</p>')
 
     //sending HTML files
-    //sendFile takes in abs dir for rel dir include 2nd arg to show root of relative dir 
+    //sendFile takes in abs dir.For rel dir include 2nd arg to show root of relative dir 
     //__dirname gets that Abs dir that's root of 1st arg.../views & app.js share same dir
     // res.sendFile('./views/index.html', { root: __dirname})
 
@@ -92,7 +93,7 @@ app.use((req,res)=>{
     // res.sendFile('./views/404.html', { root: __dirname})
 
     //to include statuscodes...use() is general for any HTML you wanna send
-    //Express doesn't know its a 404...res.status() returns res obj so can attach senFile()
+    //Express doesn't know its a 404...res.status() returns res obj so can attach sendFile()
     // res.status(404).sendFile('./views/404.html', { root: __dirname})
 
     //ejs

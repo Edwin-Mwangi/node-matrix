@@ -11,7 +11,7 @@ const dbURI = 'mongodb+srv://edwin:test123@node101.ejfrel0.mongodb.net/node101';
 mongoose.connect(dbURI)
 
 //to remove deprecated error, add 2nd arg
-// mongoose.connect(dbURI, { useNewURIParser: true, useUnifiedTopology: true})
+// mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
     //listen to port after db connection
     .then(result => app.listen('3000'))
     .catch(err => console.log(err))
@@ -53,7 +53,7 @@ app.use(express.urlencoded({extended:true}))//to view form input data
 //         .then(result => res.send(result))
 //         .catch(err => console.log(err))
 // })
-
+ 
 //normal routes
 //outputting data to views
 app.get('/',(req,res)=>{
@@ -79,7 +79,7 @@ app.get('/blogs',(req,res)=>{
 
 //posting a new blog from form
 app.post('/blogs',(req, res) =>{
-    // console.log(req.body); //undefined if urlencoded middleware not defined
+    // console.log(req.body); //form data...undefined if urlencoded middleware not defined
     const blog = new Blog(req.body);
     blog.save()
         .then(result => res.redirect('/blogs'))

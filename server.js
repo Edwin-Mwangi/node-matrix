@@ -1,6 +1,6 @@
 const http = require('http');
 const fs = require('fs');
-//_commonly used in lodash(not necessary)
+//'_' commonly used in lodash(not necessary)
 const _ = require('lodash');
 
 //create server takes a callback func which takes 2 args request obj and response Obj
@@ -16,7 +16,8 @@ const server = http.createServer((req, res)=>{
     //running a func once
     const greet = _.once(()=> console.log('hello'));
     greet();
-    greet();
+    greet();//2nd wont run
+
     // set Header content-type
     // res.setHeader('Content-type', 'text/plain');
     // res.write('find the white rabbit...');
@@ -32,7 +33,7 @@ const server = http.createServer((req, res)=>{
 
     //Basic routing...to see diff html pages
     //status codes added to show the type of response sent
-    let path = './views/';
+    let path = './views/older_html/';
 
     switch(req.url) {
         case '/':
@@ -47,7 +48,7 @@ const server = http.createServer((req, res)=>{
         case '/about-me':
             //301 for resource moved
             res.statusCode = 301;
-            res.setHeader('Location', '/about');
+            res.setHeader('Location', '/about');//to redirect
             res.end()
             break;
 
@@ -62,7 +63,7 @@ const server = http.createServer((req, res)=>{
     fs.readFile(path, (err, data) => {
         if(err){
             console.log(err);
-            res.end();
+            res.end();//must end to conclude
         }else{
             // res.write(data);
             //can pass data as arg in end()..if write() is used only once
@@ -72,6 +73,7 @@ const server = http.createServer((req, res)=>{
 });
 
 //to listen for requests
+//server.listen(port, url, callback)
 server.listen(3000, 'localhost', ()=>{
     console.log('listening on port 3000')
 })
