@@ -35,6 +35,7 @@ const server = http.createServer((req, res)=>{
     //status codes added to show the type of response sent
     let path = './views/older_html/';
 
+    //req.url gets url from browser
     switch(req.url) {
         case '/':
             path += 'index.html'
